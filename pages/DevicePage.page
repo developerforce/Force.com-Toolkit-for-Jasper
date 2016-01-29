@@ -1,0 +1,120 @@
+<apex:page standardController="Device__c" extensions="DeviceExtension" action="{!doPushTopics}">
+    <apex:includeScript value="{!URLFOR($Resource.streaming, 'cometd.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.streaming, 'jquery-1.5.1.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.streaming, 'jquery.cometd.js')}"/>
+    <script type="text/javascript">
+    // Callback for streaming API
+    function streamingCallback(message) {
+        console.log(message);
+        // If the update is for this device, reload the page
+        if (message.data.sobject.Device__c == '{!Device__c.Id}') {
+            location.reload();
+        }
+    }
+    
+    (function($){
+        $(document).ready(function() {
+            // Connect to the CometD endpoint
+            $.cometd.init({
+                url: window.location.protocol+'//'+window.location.hostname+'/cometd/33.0/',
+                requestHeaders: { Authorization: 'Bearer {!$Api.Session_ID}'}
+            });
+            
+            // Subscribe to topics. JSON-encoded update will be returned
+            // in the callback.
+            $.cometd.subscribe('/topic/{!simStatePushTopicName}', streamingCallback);
+        });
+    })(jQuery)
+    </script>
+   
+    <apex:form id="deviceForm">
+        <p>{!status}</p>
+        <apex:pageBlock title="Device Details">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton action="{!save}" value="Save" id="saveButton" style="display: none;"/>
+                <apex:commandButton action="{!cancel}" value="Cancel" id="cancelButton" style="display: none;"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="ICCID" for="terminal__iccid"/>
+                    <apex:outputText value="{!terminal.iccid}" id="terminal__iccid"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="IMEI" for="terminal__imei"/>
+                    <apex:outputText value="{!terminal.imei}" id="terminal__imei"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="IMSI" for="terminal__imsi"/>
+                    <apex:outputText value="{!terminal.imsi}" id="terminal__imsi"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="MSISDN" for="terminal__msisdn"/>
+                    <apex:outputText value="{!terminal.msisdn}" id="terminal__msisdn"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Customer" for="terminal__customer"/>
+                    <apex:outputText value="{!terminal.customer}" id="terminal__customer"/>
+                </apex:pageBlockSectionItem>
+                <apex:outputField value="{!Device__c.Asset__c}">
+                    <apex:inlineEditSupport event="ondblClick" showOnEdit="saveButton,cancelButton"/>
+                </apex:outputField>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Status" for="terminal__status"/>
+                    <apex:outputPanel >
+                        <apex:image value="{!URLFOR($Resource.status, terminalStatusIcon)}"/> &nbsp;
+                        <!-- <apex:outputText value="{!terminalStatus}" id="terminal__status"/> -->
+                        <apex:selectList styleClass="mySelect" value="{!terminal.status}" size="1">
+                            <apex:selectOption itemValue="INVENTORY_NAME" itemLabel="Inventory"/>
+                            <apex:selectOption itemValue="ACTIVATION_READY_NAME" itemLabel="Activation Ready"/>
+                            <apex:selectOption itemValue="ACTIVATED_NAME" itemLabel="Activated"/>
+                            <apex:selectOption itemValue="DEACTIVATED_NAME" itemLabel="Deactivated"/>
+                            <apex:selectOption itemValue="RETIRED_NAME" itemLabel="Retired"/>
+                            <apex:actionSupport event="onchange" action="{!editStatus}" rerender="deviceForm" />
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Terminal ID" for="terminal__terminalId"/>
+                    <apex:outputText value="{!terminal.terminalId}" id="terminal__terminalId"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock title="SMS" id="smsBlock">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton action="{!sendSms}" value="Send SMS" reRender="smsBlock"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Message" for="sms__message"/>
+                    <apex:inputText value="{!message}" size="60" id="sms__message"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockTable value="{!smsMessages}" var="item" rows="{!showSmsCount}">
+                <apex:column value="{!item.smsMsgId}">
+                    <apex:facet name="header">SMS ID</apex:facet>
+                </apex:column>
+                <apex:column value="{!item.dateSent}">
+                    <apex:facet name="header">Date Sent</apex:facet>
+                </apex:column>
+                <apex:column value="{!item.dateReceived}">
+                    <apex:facet name="header">Date Received</apex:facet>
+                </apex:column>
+                <apex:column value="{!item.messageText}">
+                    <apex:facet name="header">Message Text</apex:facet>
+                </apex:column>
+                <apex:column value="{!item.sentFrom}">
+                    <apex:facet name="header">Sent From</apex:facet>
+                </apex:column>
+                <apex:column value="{!item.sentToIccid}">
+                    <apex:facet name="header">Sent To</apex:facet>
+                </apex:column>
+                <apex:column value="{!item.status}">
+                    <apex:facet name="header">Status</apex:facet>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:commandLink action="{!moreSMS}" reRender="smsBlock" value="Show {!showSmsCount} more »"/>
+        </apex:pageBlock>
+    </apex:form>
+    <!-- <apex:relatedList list="Cases" subject="{!Device__c.Asset__c}"/> -->
+    <apex:relatedList list="SIM_State_Changes__r"/>
+</apex:page>

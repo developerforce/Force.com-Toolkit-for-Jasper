@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>DeviceExtension</members>
+        <members>ExerciseJasper</members>
+        <members>JasperAPI</members>
+        <members>JasperAPIMock</members>
+        <members>JasperAccount</members>
+        <members>JasperPushController</members>
+        <members>JasperSMS</members>
+        <members>JasperTerminal</members>
+        <members>TestExerciseJasper</members>
+        <members>TestJasperAPI</members>
+        <members>TestJasperAccount</members>
+        <members>TestJasperTerminal</members>
+        <members>TestJasperUtils</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>DevicePage</members>
+        <members>JasperPush</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>Jasper</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>Device__c</members>
+        <members>JasperSettings__c</members>
+        <members>SIM_State_Change__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Device__c</members>
+        <members>SIM_State_Change__c</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Logos</members>
+        <members>Logos/JasperLogo.png</members>
+        <name>Document</name>
+    </types>
+    <types>
+        <members>Device__c-Device Layout</members>
+        <members>SIM_State_Change__c-SIM State Change Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>status</members>
+        <members>streaming</members>
+        <name>StaticResource</name>
+    </types>
+    <version>35.0</version>
+</Package>
