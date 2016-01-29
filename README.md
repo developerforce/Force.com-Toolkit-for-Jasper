@@ -139,6 +139,14 @@ By default, device records must be created manually, although this, of course, c
         null, 'ACTIVATED_NAME', '3');
     System.debug('SIM ' + res.iccid + ' changed, effective ' + res.effectiveDate);
 
+    // Get the SMS API client
+    JasperTerminal.SmsPort smsPort = 
+        new JasperTerminal.SmsPort(
+            settings.Username__c, 
+            settings.Password__c, 
+            settings.License_Key__c,
+            settings.API_Server__c);
+
     // Send an SMS
     Long smsMsgId = smsPort.SendSMS(iccid, 'Hello world!', null);
     System.debug('Sent SMS. Message ID = ' + smsMsgId);
