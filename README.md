@@ -23,7 +23,7 @@ The toolkit is currently in an early stage of development, but all Jasper Contro
 
 ### 1. Jasper account credentials and SIM
 
-TBD!!!
+You can get a trial Control Center account with test SIMs from any of Jasper’s partner operators, listed at http://www.jasper.com/operators/where-to-get
 
 ### 2. Salesforce Environment
 
