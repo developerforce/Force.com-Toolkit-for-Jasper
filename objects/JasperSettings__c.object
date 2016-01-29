@@ -3,6 +3,14 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>API_Server__c</fullName>
+        <externalId>false</externalId>
+        <label>API Server</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>License_Key__c</fullName>
         <externalId>false</externalId>
         <label>License Key</label>

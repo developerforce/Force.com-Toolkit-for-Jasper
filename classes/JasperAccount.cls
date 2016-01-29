@@ -15,9 +15,16 @@ public class JasperAccount {
         
         public String licenseKey;
 
-        public AccountPort(String username, String password, String licenseKey) {
+        public AccountPort(String username, String password, String licenseKey, String apiServer) {
         	this.Security = new JasperAPI.SoapSecurity(username, password);
             this.licenseKey = licenseKey;
+            if (apiServer != null && apiServer.length() > 0) {
+            	endpoint_x = apiServer + '/ws/service/account';
+            }
+        }
+
+        public AccountPort(String username, String password, String licenseKey) {
+        	this(username, password, licenseKey, null);
         }
 
         public JasperAPI.ResponseStatusType EditAccount(JasperAPI.AccountType[] account) {

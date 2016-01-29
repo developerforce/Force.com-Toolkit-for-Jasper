@@ -14,9 +14,16 @@ public class JasperSMS {
         private String[] ns_map_type_info = new String[]{'http://api.jasperwireless.com/ws/schema', 'JasperSMS'};
         public String licenseKey;
 
-        public SmsPort(String username, String password, String licenseKey) {
+        public SmsPort(String username, String password, String licenseKey, String apiServer) {
         	this.Security = new JasperAPI.SoapSecurity(username, password);
             this.licenseKey = licenseKey;
+            if (apiServer != null && apiServer.length() > 0) {
+            	endpoint_x = apiServer + '/ws/service/Sms';
+            }
+        }
+
+        public SmsPort(String username, String password, String licenseKey) {
+        	this(username, password, licenseKey, null);
         }
 
         public Long SendSMS(String sentToIccid,String messageText,Integer tpvp) {

@@ -9,7 +9,8 @@ public class ExerciseJasper {
 		JasperTerminal.TerminalPort terminalPort = new JasperTerminal.TerminalPort(
 			settings.Username__c, 
 			settings.Password__c, 
-			settings.License_Key__c
+			settings.License_Key__c,
+			settings.API_Server__c
 		);
 		
 		// GetModifiedTerminals
@@ -120,7 +121,8 @@ public class ExerciseJasper {
 		JasperAccount.AccountPort accountPort = new JasperAccount.AccountPort(
 			settings.Username__c, 
 			settings.Password__c, 
-			settings.License_Key__c
+			settings.License_Key__c,
+			settings.API_Server__c
 		);
 		
 		// GetAccounts
@@ -150,7 +152,8 @@ public class ExerciseJasper {
 		JasperSMS.SmsPort smsPort = new JasperSMS.SmsPort(
 			settings.Username__c, 
 			settings.Password__c, 
-			settings.License_Key__c
+			settings.License_Key__c,
+			settings.API_Server__c
 		);
 		
 		

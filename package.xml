@@ -47,6 +47,10 @@
         <name>Layout</name>
     </types>
     <types>
+        <members>Jasper</members>
+        <name>RemoteSiteSetting</name>
+    </types>
+    <types>
         <members>status</members>
         <members>streaming</members>
         <name>StaticResource</name>

@@ -14,9 +14,16 @@ public class JasperTerminal {
         private String[] ns_map_type_info = new String[]{'http://api.jasperwireless.com/ws/schema', 'JasperTerminal'};
         public String licenseKey;
 
-        public TerminalPort(String username, String password, String licenseKey) {
+        public TerminalPort(String username, String password, String licenseKey, String apiServer) {
         	this.Security = new JasperAPI.SoapSecurity(username, password);
             this.licenseKey = licenseKey;
+            if (apiServer != null && apiServer.length() > 0) {
+            	endpoint_x = apiServer + '/ws/service/terminal';
+            }
+        }
+
+        public TerminalPort(String username, String password, String licenseKey) {
+        	this(username, password, licenseKey, null);
         }
 
         public JasperAPI.terminals_element_imsitoissid GetTerminalsByImsi(JasperAPI.imsi_element imsi) {
