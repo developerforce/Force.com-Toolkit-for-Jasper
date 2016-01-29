@@ -43,9 +43,9 @@ On Salesforce:
 
 * By JasperSettings, click ‘Manage’
 
-* Add a new organization default setting containing your Jasper username, password and license key. You can find your API license key by logging into Jasper Control Center and clicking Resources | API Integration. Your API license key will be shown in the top left of the page.
+* Add a new organization default setting containing your Jasper username, password, API license key and server. You can find your API license key and server by logging into Jasper Control Center and clicking Resources | API Integration. Your API license key and server will be shown in the top left of the page.
 
-NOTE - the settings are in alphabetical order - password is above username!
+NOTE - the settings may be displayed in alphabetical order - password above username!
 
 ### 2. Configure Push API
 
@@ -113,7 +113,11 @@ By default, device records must be created manually, although this, of course, c
 
     // Get the terminal API client
     JasperTerminal.TerminalPort terminalPort = 
-        new JasperTerminal.TerminalPort(settings.Username__c, settings.Password__c, settings.License_Key__c);
+        new JasperTerminal.TerminalPort(
+            settings.Username__c, 
+            settings.Password__c, 
+            settings.License_Key__c,
+            settings.API_Server__c);
 
     // Get a list of terminals
     JasperAPI.iccids_element terminals = terminalPort.GetModifiedTerminals(null, null);

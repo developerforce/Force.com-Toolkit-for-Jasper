@@ -2,7 +2,7 @@
 
 public class JasperSMS {
     public class SmsPort {
-        public String endpoint_x = 'https://api.jasperwireless.com/ws/service/Sms';
+        public String endpoint_x;
 		public JasperAPI.SoapSecurity Security;
 		private String Security_hns = 'Security=http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';
         public Map<String,String> inputHttpHeaders_x;
@@ -17,13 +17,7 @@ public class JasperSMS {
         public SmsPort(String username, String password, String licenseKey, String apiServer) {
         	this.Security = new JasperAPI.SoapSecurity(username, password);
             this.licenseKey = licenseKey;
-            if (apiServer != null && apiServer.length() > 0) {
-            	endpoint_x = apiServer + '/ws/service/Sms';
-            }
-        }
-
-        public SmsPort(String username, String password, String licenseKey) {
-        	this(username, password, licenseKey, null);
+            this.endpoint_x = apiServer + '/ws/service/Sms';
         }
 
         public Long SendSMS(String sentToIccid,String messageText,Integer tpvp) {

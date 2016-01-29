@@ -78,8 +78,8 @@ global with sharing class DeviceExtension {
     	stdController.addFields(new List<String>{'Name'});
         device = (Device__c)stdController.getRecord();
         
-        terminalPort = new JasperTerminal.TerminalPort(settings.Username__c, settings.Password__c, settings.License_Key__c);
-        smsPort = new JasperSMS.SmsPort(settings.Username__c, settings.Password__c, settings.License_Key__c);
+        terminalPort = new JasperTerminal.TerminalPort(settings.Username__c, settings.Password__c, settings.License_Key__c, settings.API_Server__c);
+        smsPort = new JasperSMS.SmsPort(settings.Username__c, settings.Password__c, settings.License_Key__c, settings.API_Server__c);
         
         JasperAPI.iccids_element iccids = new JasperAPI.iccids_element();
         iccids.iccid = new List<String>{device.Name};

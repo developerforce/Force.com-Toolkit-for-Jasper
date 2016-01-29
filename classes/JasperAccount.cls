@@ -2,7 +2,7 @@
 
 public class JasperAccount {
     public class AccountPort {
-        public String endpoint_x = 'https://api.jasperwireless.com/ws/service/account';
+        public String endpoint_x;
 		public JasperAPI.SoapSecurity Security;
 		private String Security_hns = 'Security=http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';
         public Map<String,String> inputHttpHeaders_x;
@@ -18,13 +18,7 @@ public class JasperAccount {
         public AccountPort(String username, String password, String licenseKey, String apiServer) {
         	this.Security = new JasperAPI.SoapSecurity(username, password);
             this.licenseKey = licenseKey;
-            if (apiServer != null && apiServer.length() > 0) {
-            	endpoint_x = apiServer + '/ws/service/account';
-            }
-        }
-
-        public AccountPort(String username, String password, String licenseKey) {
-        	this(username, password, licenseKey, null);
+            this.endpoint_x = apiServer + '/ws/service/account';
         }
 
         public JasperAPI.ResponseStatusType EditAccount(JasperAPI.AccountType[] account) {
