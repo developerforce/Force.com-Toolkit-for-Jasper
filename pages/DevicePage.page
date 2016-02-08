@@ -37,7 +37,7 @@
             <apex:pageBlockSection columns="2">
                 <apex:pageBlockSectionItem >
                     <apex:outputLabel value="ICCID" for="terminal__iccid"/>
-                    <apex:outputText value="{!terminal.iccid}" id="terminal__iccid"/>
+                    <apex:outputText value="{!Device__c.Name}" id="terminal__iccid"/>
                 </apex:pageBlockSectionItem>
                 <apex:pageBlockSectionItem >
                     <apex:outputLabel value="IMEI" for="terminal__imei"/>

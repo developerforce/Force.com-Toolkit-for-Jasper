@@ -75,7 +75,7 @@ global with sharing class DeviceExtension {
     	simStatePushTopicQuery = 'SELECT Id, Device__c FROM SIM_State_Change__c';
         
     	settings = JasperSettings__c.getInstance(UserInfo.getUserId());
-    	stdController.addFields(new List<String>{'Name'});
+
         device = (Device__c)stdController.getRecord();
         
         terminalPort = new JasperTerminal.TerminalPort(settings.Username__c, settings.Password__c, settings.License_Key__c, settings.API_Server__c);
@@ -180,9 +180,9 @@ global with sharing class DeviceExtension {
         }
     }
     
-    // TBD:Figure this out
+    // TBD:The logic here needs a little more work
     public PageReference moreSMS() {
-    	showSmsCount *= 2;
+    	showSmsCount = Math.min( showSmsCount * 2, smsMessages.size());
     	
     	return null;
     }
