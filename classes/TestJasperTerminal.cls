@@ -32,7 +32,8 @@ global class TestJasperTerminal {
 	static JasperTerminal.TerminalPort terminalPort;
 	
 	static {
-		terminalPort = new JasperTerminal.TerminalPort('username', 'password', 'license key');
+		terminalPort = new JasperTerminal.TerminalPort('username', 'password', 
+			'license key', 'https://api.jasperwireless.com');
 	}
 	
     global class QueueTerminalRatePlanMockImpl implements WebServiceMock {

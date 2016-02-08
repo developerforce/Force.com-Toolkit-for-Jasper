@@ -31,7 +31,8 @@ global class TestJasperAccount {
 	static JasperAccount.AccountPort accountPort;
 	
 	static {
-		accountPort = new JasperAccount.AccountPort('username', 'password', 'license key');
+		accountPort = new JasperAccount.AccountPort('username', 'password', 
+			'license key', 'https://api.jasperwireless.com');
 	}
 	
 	global class EditAccountMockImpl implements WebServiceMock {
