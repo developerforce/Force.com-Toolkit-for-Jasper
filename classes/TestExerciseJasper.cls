@@ -31,8 +31,10 @@ public class TestExerciseJasper {
     static testMethod void testExerciseJasper() {
     	Test.setMock(WebServiceMock.class, new JasperAPIMock());
     	
-    	ExerciseJasper.exerciseTerminal();
-    	ExerciseJasper.exerciseAccount();
-    	ExerciseJasper.exerciseSMS();
+    	ExerciseJasper e = new ExerciseJasper();
+    	
+    	e.exerciseTerminal();
+    	e.exerciseAccount();
+    	e.exerciseSMS();
     }
 }

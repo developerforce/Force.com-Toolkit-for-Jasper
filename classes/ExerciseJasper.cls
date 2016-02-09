@@ -30,11 +30,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 public class ExerciseJasper {
 	static JasperSettings__c settings = JasperSettings__c.getInstance(UserInfo.getUserId());
 	
-	// If iccid is null here, just test using the first one returned by GetModifiedTerminals
-	static String iccid = '89302720396916964856';
-	static String msisdn = '12269289276';
+	String iccid = null;
+	
+	// Default constructor - just use the first device returned by GetModifiedTerminals
+	public ExerciseJasper() {
+	}
 
-	public static void exerciseTerminal() {
+	// Use this ICCID in calling the APIs
+	// Useful to avoid sending SMS messages to other users' devices!
+	public ExerciseJasper(String iccid) {
+		this.iccid = iccid;
+	}
+
+	public void exerciseTerminal() {
 		JasperTerminal.TerminalPort terminalPort = new JasperTerminal.TerminalPort(
 			settings.Username__c, 
 			settings.Password__c, 
@@ -61,10 +69,7 @@ public class ExerciseJasper {
 		System.assert((terminalDetails.terminal.size() > 0), 'GetTerminalDetails: no terminals!');
 		
 		String imsi = terminalDetails.terminal[0].imsi;
-		if (msisdn == null) {
-			msisdn = terminalDetails.terminal[0].msisdn;
-		}
-		
+		String msisdn = terminalDetails.terminal[0].msisdn;
 		Long accountId = terminalDetails.terminal[0].accountId;
 		
 		// GetTerminalsByImsi
@@ -146,7 +151,7 @@ public class ExerciseJasper {
 		System.assert((auditTrails.terminalAuditTrail.size() > 0), 'GetTerminalAuditTrail: no audit trail!');
 	}
 	
-	public static void exerciseAccount() {
+	public void exerciseAccount() {
 		JasperAccount.AccountPort accountPort = new JasperAccount.AccountPort(
 			settings.Username__c, 
 			settings.Password__c, 
@@ -177,14 +182,13 @@ public class ExerciseJasper {
 		System.assertEquals(accountId, thisAccountId, 'GetAccountIdByAcctName: account mismatch!');
 	}
 	
-	public static void exerciseSMS() {
+	public void exerciseSMS() {
 		JasperSMS.SmsPort smsPort = new JasperSMS.SmsPort(
 			settings.Username__c, 
 			settings.Password__c, 
 			settings.License_Key__c,
 			settings.API_Server__c
 		);
-		
 		
 		// SendSMS
 		String messageText = 'Tester';
@@ -222,6 +226,21 @@ public class ExerciseJasper {
 		// sentToIccid seems to contain an MSISDN
 		//System.assertEquals(iccid, messages.smsMessage[0].sentToIccid, 'GetSMSDetails: ICCID mismatch in first SMS message');
 		//System.assertEquals(iccid, messages.smsMessage[1].sentToIccid, 'GetSMSDetails: ICCID mismatch in second SMS message');
+
+		// GetTerminalDetails for MSISDN
+		JasperTerminal.TerminalPort terminalPort = new JasperTerminal.TerminalPort(
+			settings.Username__c, 
+			settings.Password__c, 
+			settings.License_Key__c,
+			settings.API_Server__c
+		);		
+		System.debug('GetTerminalDetails');
+		JasperAPI.iccids_element iccids = new JasperAPI.iccids_element();
+		iccids.iccid = new List<String>{iccid};
+		JasperAPI.terminals_element terminalDetails = terminalPort.GetTerminalDetails(iccids);
+		System.debug('GetTerminalDetails got: ' + terminalDetails);
+		System.assert((terminalDetails.terminal.size() > 0), 'GetTerminalDetails: no terminals!');
+		String msisdn = terminalDetails.terminal[0].msisdn;
 
 		// SendSMSToMsisdn
 		System.debug('SendSMSToMsisdn');

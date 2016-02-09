@@ -66,6 +66,7 @@ global class JasperAPIMock implements WebServiceMock {
    			new JasperAPI.GetModifiedTerminalsResponse_element();   
 		responseElement.iccids = new JasperAPI.iccids_element();
 		responseElement.iccids.iccid = new List<String>{
+			'89302720396916964856',
 			'89302720396911983604', 
 			'89302720396916964831', 
 			'89302720396916964849', 
@@ -74,8 +75,7 @@ global class JasperAPIMock implements WebServiceMock {
 			'89302720396917145109', 
 			'89302720396917145117', 
 			'89302720396910585673', 
-			'89302720396910585772', 
-			'89302720396917144052'
+			'89302720396910585772'
 		};
 		return responseElement;
    	}
