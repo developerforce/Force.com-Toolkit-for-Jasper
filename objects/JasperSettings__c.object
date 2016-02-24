@@ -31,6 +31,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Push_API_Shared_Secret__c</fullName>
+        <defaultValue>&quot;default&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Push API Shared Secret</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Username__c</fullName>
         <externalId>false</externalId>
         <label>Username</label>

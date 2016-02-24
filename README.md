@@ -13,7 +13,7 @@ The Force.com Toolkit for Jasper is an Apex client library for the [Jasper Contr
 
 * SIM State Change custom object - represents the corresponding event in Jasper. Master-detail relationship to Device.
 
-* JasperSettings custom setting - holds license key, password and username for accessing the API.
+* JasperSettings custom setting - holds license key, password, username and shared secret for accessing the API.
 
 * Test code for the above
 
@@ -43,7 +43,7 @@ On Salesforce:
 
 * By JasperSettings, click ‘Manage’
 
-* Add a new organization default setting containing your Jasper username, password, API license key and server. You can find your API license key and server by logging into Jasper Control Center and clicking Resources | API Integration. Your API license key and server will be shown in the top left of the page.
+* Add a new organization default setting containing your Jasper username, password, API license key, server and Push API Shared Secret. You can find your API license key and server by logging into Jasper Control Center and clicking Resources | API Integration. Your API license key and server will be shown in the top left of the page. You can set the Push API Shared Secret in the account details under Admin. If you can't set the shared secret in Jasper Control Center and it appears to be blank, then leave the default value `default` in the field in Salesforce.
 
 NOTE - the settings may be displayed in alphabetical order - password above username!
 
@@ -161,4 +161,4 @@ By default, device records must be created manually, although this, of course, c
 
 1. Jasper APIs should be considered single-threaded; there is nothing in the current implementation to prevent concurrent Jasper API calls.
 
-2. The JasperPush Visualforce Page accepts XML in the ‘data’ form parameter and creates a record representing the Jasper event. This record creation can then be used in a trigger, workflow, process, etc. At present, a single event type, ‘SIM State Change’, is supported. To add more, create an SObject to hold the event, with name corresponding to the rule trigger in Jasper (e.g. ‘SIM Data Limit’), fields for whatever you’re sending in the email. Extend the objectNames and fieldNames maps in the JasperPushController Apex class to handle the new event.
+2. The JasperPush Visualforce Page accepts XML in the ‘data’ form parameter and creates a record representing the Jasper event. This record creation can then be used in a trigger, workflow, process, etc. At present, a single event type, ‘SIM State Change’, is supported. To add more, create an SObject to hold the event, with name corresponding to the rule trigger in Jasper (e.g. ‘SIM Data Limit’), and fields for whatever you’re sending in the email. Extend the objectNames and fieldNames maps in the JasperPushController Apex class to handle the new event. The Jasper notification messages are defined in the [Jasper API Schema](https://jcc.jasperwireless.com/provision/secure/apidoc/schema/JasperAPI.html); each has a corresponding type ending 'InfoType', for example, [SimImeiChangeInfoType](https://jcc.jasperwireless.com/provision/secure/apidoc/schema/JasperAPI.html#LinkCA).

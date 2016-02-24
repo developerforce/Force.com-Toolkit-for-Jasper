@@ -27,6 +27,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 public class JasperPushController {
+	public class JasperPushException extends Exception {
+	}
+	
     // Map from XML element names to Salesforce API names
 	private final Map<String, String> objectNames = new Map<String, String>{
         'SimStateChange' => 'Sim_State_Change__c'
@@ -36,8 +39,21 @@ public class JasperPushController {
         'previousState' => 'FromSimState__c',
         'currentState' => 'ToSimState__c'
 	};
-        
+	
     public PageReference onLoad() {
+    	JasperSettings__c settings = JasperSettings__c.getInstance(UserInfo.getUserId());
+    	
+    	// Verify signature first!
+        String timestamp = ApexPages.CurrentPage().getParameters().get('timestamp');
+        String signature = ApexPages.CurrentPage().getParameters().get('signature');
+    	String secret = (settings.Push_API_Shared_Secret__c != null) 
+    		? settings.Push_API_Shared_Secret__c 
+    		: 'default';
+		Blob hash = crypto.generateMac('HmacSHA1', Blob.valueOf(timestamp), Blob.valueOf(secret));
+		if (!EncodingUtil.base64Encode(hash).equals(signature)) {
+			throw new JasperPushException('Invalid signature: got \''+signature+'\', expected \''+hash+'\'');
+		}
+
         String data = ApexPages.CurrentPage().getParameters().get('data');
         System.debug(data);
         
@@ -50,8 +66,6 @@ public class JasperPushController {
 		//  <dateChanged>2015-11-16T21:17:17.056Z</dateChanged>
 		// </SimStateChange>
 
-		// TBD - Verify Signature!
-        
         Dom.Document doc = new Dom.Document();
         doc.load(data);
 

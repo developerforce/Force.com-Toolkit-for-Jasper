@@ -12,6 +12,7 @@
         <members>TestExerciseJasper</members>
         <members>TestJasperAPI</members>
         <members>TestJasperAccount</members>
+        <members>TestJasperPushController</members>
         <members>TestJasperTerminal</members>
         <members>TestJasperUtils</members>
         <name>ApexClass</name>
