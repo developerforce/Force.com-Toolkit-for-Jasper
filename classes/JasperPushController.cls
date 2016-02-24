@@ -43,7 +43,7 @@ public class JasperPushController {
     public PageReference onLoad() {
     	JasperSettings__c settings = JasperSettings__c.getInstance(UserInfo.getUserId());
     	
-    	// Verify signature first!
+    	// Verify signature
         String timestamp = ApexPages.CurrentPage().getParameters().get('timestamp');
         String signature = ApexPages.CurrentPage().getParameters().get('signature');
     	String secret = (settings.Push_API_Shared_Secret__c != null) 
@@ -52,6 +52,13 @@ public class JasperPushController {
 		Blob hash = crypto.generateMac('HmacSHA1', Blob.valueOf(timestamp), Blob.valueOf(secret));
 		if (!EncodingUtil.base64Encode(hash).equals(signature)) {
 			throw new JasperPushException('Invalid signature: got \''+signature+'\', expected \''+hash+'\'');
+		}
+		
+		// Verify timestamp - check it's no more than 5 mins old
+		DateTime dtTimestamp = (DateTime)JSON.deserialize('\"' + timestamp + '\"', DateTime.class);
+		DateTime dtNow = DateTime.now();
+		if (dtTimestamp.getTime() < (dtNow.getTime() - (5 * 60 * 1000L))) {
+			throw new JasperPushException('Timestamp expired: timestamp \''+dtTimestamp+'\', now \''+dtNow+'\'');
 		}
 
         String data = ApexPages.CurrentPage().getParameters().get('data');
