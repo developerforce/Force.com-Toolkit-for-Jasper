@@ -31,7 +31,7 @@ Either a sandbox, or a Developer Edition. If you don't already have one, [sign u
 
 ## Installation
 
-The easiest way to install the toolkit is via an unmanaged package. [Click this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t1a0000001zIt), login to your Salesforce environment, if necessary, and follow the instructions.
+The easiest way to install the toolkit is via an unmanaged package. [Click this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t1a0000001zIy), login to your Salesforce environment, if necessary, and follow the instructions.
 
 You can also clone the GitHub project and deploy the code into your Salesforce environment via the Force.com IDE, the Force.com CLI or the Force.com Migration Tool.
 
