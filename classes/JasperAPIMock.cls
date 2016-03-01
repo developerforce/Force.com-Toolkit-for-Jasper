@@ -28,7 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @isTest
 global class JasperAPIMock implements WebServiceMock {
-	JasperAPI.TerminalType terminal;
+	global JasperAPI.TerminalType terminal;
 	
 	global JasperAPIMock() {
    		terminal = new JasperAPI.TerminalType();
@@ -38,6 +38,9 @@ global class JasperAPIMock implements WebServiceMock {
    		terminal.dateAdded = Datetime.valueOfGmt('2014-04-25 21:43:29');
    		terminal.dateModified = Datetime.valueOfGmt('2016-01-15 18:33:04');
    		terminal.dateShipped = Datetime.valueOfGmt('2015-04-27 00:00:00');
+   		terminal.monthToDateDataUsage = 3.000;
+   		terminal.monthToDateSMSUsage = 3;
+   		terminal.monthToDateVoiceUsage = 3;
    		terminal.iccid = '89302720396916964856';
    		terminal.imei = '3541570518190901';
    		terminal.imsi = '302720391779905';

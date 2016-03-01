@@ -215,4 +215,13 @@ global with sharing class DeviceExtension {
     	
     	return null;
     }
+    
+    public List<Usage__c> getUsage() {
+        DateTime startTime = System.now().addMonths(-1);
+        return [SELECT Id, CreatedDate, Data_Usage__c, SMS_Usage__c
+				FROM Usage__c
+				WHERE Device__c = :device.Id
+				  AND CreatedDate > :startTime
+				ORDER BY CreatedDate ASC];
+    }
 }

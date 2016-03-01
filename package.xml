@@ -3,6 +3,7 @@
     <types>
         <members>DeviceExtension</members>
         <members>ExerciseJasper</members>
+        <members>GetDataUsage</members>
         <members>JasperAPI</members>
         <members>JasperAPIMock</members>
         <members>JasperAccount</members>
@@ -10,6 +11,7 @@
         <members>JasperSMS</members>
         <members>JasperTerminal</members>
         <members>TestExerciseJasper</members>
+        <members>TestGetDataUsage</members>
         <members>TestJasperAPI</members>
         <members>TestJasperAccount</members>
         <members>TestJasperPushController</members>
